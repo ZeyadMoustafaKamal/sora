@@ -11,3 +11,6 @@ dependencies = [
     "lxml>=5.3.0",
     "typer>=0.15.1",
 ]
+
+[project.scripts]
+sora = "cli:app"
