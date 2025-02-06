@@ -43,7 +43,7 @@ class Anime:
         start, end = episode_line.split("-")
         start, end = int(start), int(end)
         print("downloading from {} to {}".format(start, end))
-        return indirect_urls[start - 1 : end - 1]
+        return indirect_urls[start - 1 : end]
 
     @property
     def indirect_urls(self):
