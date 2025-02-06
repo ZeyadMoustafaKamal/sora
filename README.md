@@ -10,4 +10,4 @@ So I was downloading an anime episode when I found out that I take like 35 secs 
 
 ### Important
 - First I only get some videos from some random website. If you are someone who thinks that I am violating the copywrite laws then just tell me and I will delete this.
-- Second this project is very WIP. In this state I would recomment that you read the scripts and figure out how to deal with it. I will still provide a way to choose the quality and I will try to add a search functionality and maybe I will create a TUI to make this even more easy to use. I only need some time. But of course a PR will be very welcomed.
+- Second this project is very WIP. In this state I would recommend that you read the scripts and figure out how to deal with it. I will still provide a way to choose the quality and I will try to add a search functionality and maybe I will create a TUI to make this even more easy to use. I only need some time. But of course a PR will be very welcomed.
