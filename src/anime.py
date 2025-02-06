@@ -142,6 +142,3 @@ class Episode:
                 quality_text = download_element.find("span").text
                 info[quality_text] = download_element.attrs.get("data-index")
         return info
-
-    def get_url(self, quality):
-        pass
