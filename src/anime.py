@@ -67,7 +67,7 @@ class Episode:
         urls = self.parse_js_urls(js_data.text)
         title = soup.find_all(attrs={"class": "main-section"})[-1].find("h3").text
         quality_info = self.get_quality_info(r.text)
-        
+
         info["title"] = title
         info["url"] = urls
         info["quality"] = quality_info
@@ -93,9 +93,11 @@ class Episode:
             downloader = MediafireDownloader(url)
             downloader.download()
         else:
-            raise ValueError("Only {} exists which are not suported yet", quality.keys())
-    
-    def get_quality_from_number(self,quality_number):
+            raise ValueError(
+                "Only {} exists which are not suported yet", quality.keys()
+            )
+
+    def get_quality_from_number(self, quality_number):
         quality_info = self.info["quality"]
         if quality_number == 1:
             quality_order = "SD HD FHD"
