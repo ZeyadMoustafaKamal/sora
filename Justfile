@@ -1,2 +1,2 @@
-run:
-  @uv run src/cli.py
+run +args="":
+  @uv run src/cli.py {{ args }}
