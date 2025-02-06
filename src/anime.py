@@ -37,8 +37,12 @@ class Anime:
 
     def get_episodes_urls(self, episode_line):
         indirect_urls = self.info["indirect_urls"]
+        if episode_line == "all":
+            print("Downloading all the {} episodes".format(len(indirect_urls)))
+            return indirect_urls
         if "-" not in episode_line:
             episode_line = int(episode_line)
+            print("Downloading episode number {}".format(episode_line))
             return [indirect_urls[episode_line - 1]]
         start, end = episode_line.split("-")
         start, end = int(start), int(end)
