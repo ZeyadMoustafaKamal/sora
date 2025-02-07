@@ -116,24 +116,24 @@ class Episode:
         to get the direct link of the episode.
         """
         soup = Bs(html, "lxml")
-        quality_info = {"SD": {}, "HD": {}, "FHD": {}}
+        info = {"SD": {}, "HD": {}, "FHD": {}}
         quality_list = soup.find_all(attrs={"class": "quality-list"})
         if quality_list is not None:
             for quality_element in quality_list:
-                quality = quality_element.find("li").text
-                if "SD" in quality:
-                    quality_info["SD"] = self.filter_quality(quality_element)
-                elif "FHD" in quality:
-                    quality_info["FHD"] = self.filter_quality(quality_element)
+                quality_text = quality_element.find("li").text
+                if "SD" in quality_text:
+                    info["SD"] = self.filter_quality(quality_element)
+                elif "FHD" in quality_text:
+                    info["FHD"] = self.filter_quality(quality_element)
 
-                elif "HD" in quality:
-                    quality_info["HD"] = self.filter_quality(quality_element)
+                elif "HD" in quality_text:
+                    info["HD"] = self.filter_quality(quality_element)
 
                 else:
                     raise ValueError(
                         "An error occured while processing the quality info. Try again later"
                     )
-            return quality_info
+            return info
         raise ValueError("Couldn't find the video. Wrong url ?")
 
     def filter_quality(self, html):
