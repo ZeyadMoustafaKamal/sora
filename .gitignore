@@ -12,4 +12,4 @@ wheels/
 # other
 .ruff_cache
 data/
-test.py
+test.*
