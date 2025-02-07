@@ -15,22 +15,21 @@ def download(
         typer.Option(
             "-e",
             "--episodes",
-            help="The episodes line. You should pass the number of the episode to download\
-or you can pass something like 1-5 to download from the episode number 1 to the number 5. Will be ignored if --all is passed",
+            help="The episode to download. An expression like `1-5` can be passed to download the first 5 episodes.\
+ Will be ignored if --all specefied",
         ),
     ] = None,
     download_all: Annotated[
         bool,
         typer.Option(
             "--all",
-            help="Download all episodes of the anime. Note that this is the default option if not --line",
+            help="Download all the anime. Note that this is the default option if no -e specified.",
         ),
     ] = None,
     quality: Annotated[
         int,
         typer.Option(
-            help="The quality of the episodes. You can choose 1 for the lowest possible or 2 for the\
-HD quality of exists or SD if no HD quality or FHD if not HD or SD available or 3 for the highest possible."
+            help="1 for the lowest and 3 for the highest and 2 to download the first available of HD, SD, FHD."
         ),
     ] = 2,
 ) -> None:
