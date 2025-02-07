@@ -2,7 +2,7 @@ from anime import Anime
 
 import typer
 
-from typing import Annotated
+from typing import Annotated, Optional
 
 app = typer.Typer()
 
@@ -11,19 +11,17 @@ app = typer.Typer()
 def download(
     url: str,
     episodes: Annotated[
-        str,
-        typer.Option(
-            "-e",
-            "--episodes",
+        Optional[str],
+        typer.Argument(
             help="The episode to download. An expression like `1-5` can be passed to download the first 5 episodes.\
- Will be ignored if --all specefied",
+ Will be ignored if --all specefied.",
         ),
     ] = None,
     download_all: Annotated[
         bool,
         typer.Option(
             "--all",
-            help="Download all the anime. Note that this is the default option if no -e specified.",
+            help="Download all the anime. Note that this is the default option if no episodes specified.",
         ),
     ] = None,
     quality: Annotated[

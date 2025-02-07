@@ -35,16 +35,16 @@ class Anime:
             print("downloading {}".format(episode.info["title"]))
             episode.download(quality)
 
-    def get_episodes_urls(self, episode_line):
+    def get_episodes_urls(self, episodes):
         indirect_urls = self.info["indirect_urls"]
-        if episode_line == "all":
+        if episodes == "all":
             print("Downloading all the {} episodes".format(len(indirect_urls)))
             return indirect_urls
-        if "-" not in episode_line:
-            episode_line = int(episode_line)
-            print("Downloading episode number {}".format(episode_line))
-            return [indirect_urls[episode_line - 1]]
-        start, end = episode_line.split("-")
+        if "-" not in episodes:
+            episodes = int(episodes)
+            print("Downloading episode number {}".format(episodes))
+            return [indirect_urls[episodes - 1]]
+        start, end = episodes.split("-")
         start, end = int(start), int(end)
         print("downloading from {} to {}".format(start, end))
         return indirect_urls[start - 1 : end]
@@ -105,9 +105,9 @@ class Episode:
             quality_order = "HD SD FHD"
         elif quality_number == 3:
             quality_order = "FHD HD SD"
-        for element in quality_order.split():
-            if quality_info[element]:
-                return quality_info[element]
+        for quality in quality_order.split():
+            if quality_info[quality]:
+                return quality_info[quality]
         raise ValueError("Couldn't process quality info.")
 
     def get_quality_info(self, html):
