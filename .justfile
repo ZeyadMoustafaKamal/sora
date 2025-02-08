@@ -1,5 +1,5 @@
 run +args="":
-  @uv run src/cli.py {{ args }}
+  @uv run sora/cli.py {{ args }}
 
 install:
   @uv tool install . --reinstall
