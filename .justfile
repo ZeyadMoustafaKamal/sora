@@ -1,5 +1,5 @@
 run +args="":
-  @uv run -m sora.cli {{ args }}
+  @uv run -m sora {{ args }}
 
 install:
   @uv tool install . --reinstall

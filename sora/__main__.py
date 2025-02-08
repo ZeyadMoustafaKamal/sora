@@ -1,4 +1,4 @@
-from cli import main
+from sora.cli import app
 
 if __name__ == "__main__":
-    main()
+    app()
