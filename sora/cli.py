@@ -1,4 +1,4 @@
-from anime import Anime
+from sora.anime import Anime
 
 import typer
 

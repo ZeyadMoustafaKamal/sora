@@ -1,8 +1,8 @@
 import httpx
 from bs4 import BeautifulSoup as Bs
 
-from downloaders import MediafireDownloader
-from utils import get_from_to
+from sora.downloaders import MediafireDownloader
+from sora.utils import get_from_to
 
 import base64
 import json

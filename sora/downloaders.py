@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as Bs
 import httpx
 
-from utils import get_random_name
+from sora.utils import get_random_name
 
 from gzip import GzipFile
 from io import BytesIO
