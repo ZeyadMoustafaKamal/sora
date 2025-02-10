@@ -28,7 +28,9 @@ class Anime:
         info["title"] = soup.find(attrs={"class": "anime-page-link"}).find("a").text
         return info
 
-    def download(self, episode_line, quality):
+    def download(self, episode_line, quality=None):
+        if quality is None:
+            quality = 2
         episodes_urls = self.get_episodes_urls(episode_line)
         for url in episodes_urls:
             episode = Episode(url)
@@ -97,7 +99,9 @@ class Episode:
                 "Only {} exists which are not suported yet", quality.keys()
             )
 
-    def get_quality_from_number(self, quality_number):
+    def get_quality_from_number(self, quality_number=None):
+        if quality_number is None:
+            quality_number = 2
         quality_info = self.info["quality"]
         if quality_number == 1:
             quality_order = "SD HD FHD"
