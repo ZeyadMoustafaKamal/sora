@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-sora = "cli:app"
+sora = "sora.cli:app"
 
 [tool.setuptools]
 packages = ["sora"]
