@@ -4,3 +4,6 @@ run +args="":
 install:
   @uv tool install . --reinstall
 
+clean:
+  @rm -rf build sora.egg-info
+
