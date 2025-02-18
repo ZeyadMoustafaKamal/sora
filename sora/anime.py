@@ -11,11 +11,12 @@ import json
 class Anime:
     def __init__(self, url) -> None:
         self.url = url
+        self.client = httpx.Client()
         self.info = self.get_anime_info()
 
     def get_anime_info(self):
         info = {}
-        r = httpx.get(self.url)
+        r = self.client.get(self.url)
         soup = Bs(r.text, "lxml")
         indirect_urls = []
         for ep in soup.find(id="ULEpisodesList").find_all("a"):
@@ -33,7 +34,7 @@ class Anime:
             quality = 2
         episodes_urls = self.get_episodes_urls(episode_line)
         for url in episodes_urls:
-            episode = Episode(url)
+            episode = Episode(url, self.client)
             print("downloading {}".format(episode.info["title"]))
             episode.download(quality)
 
@@ -57,13 +58,14 @@ class Anime:
 
 
 class Episode:
-    def __init__(self, url) -> None:
+    def __init__(self, url, client=None) -> None:
         self.url = url
+        self.client = client or httpx.Client()
         self.info = self.get_episode_info()
 
     def get_episode_info(self):
         info = {}
-        r = httpx.get(self.url)
+        r = self.client.get(self.url)
         soup = Bs(r.text, "lxml")
         js_data = soup.find(id="d-l-js-extra")
         urls = self.parse_js_urls(js_data.text)
