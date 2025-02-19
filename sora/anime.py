@@ -2,9 +2,8 @@ import httpx
 from bs4 import BeautifulSoup as Bs
 
 from sora.downloaders import MediafireDownloader
-from sora.utils import get_from_to
+from sora.utils import get_from_to, base64_decode
 
-import base64
 import json
 
 
@@ -21,7 +20,7 @@ class Anime:
         indirect_urls = []
         for ep in soup.find(id="ULEpisodesList").find_all("a"):
             url_encoded = ep.attrs.get("onclick")[13:-2]
-            url = base64.b64decode(url_encoded).decode("utf-8")
+            url = base64_decode(url_encoded)
             indirect_urls.append(url)
         if not indirect_urls:
             raise ValueError("An error occured")
@@ -79,11 +78,11 @@ class Episode:
 
     def parse_js_urls(self, js):
         urls_data = json.loads(get_from_to(js, '["', '"]', 2))
-        decoded_urls = [base64.b64decode(url).decode("utf-8") for url in urls_data]
+        decoded_urls = [base64_decode(url) for url in urls_data]
         offset_data = json.loads(get_from_to(js, "[{", "}]", 2))
         urls = []
         for i, item in enumerate(offset_data):
-            decoded_k = int(base64.b64decode(item["k"]).decode("utf-8"))
+            decoded_k = int(base64_decode(item["k"]))
             offset = item["d"][decoded_k]
             clean_url = decoded_urls[i][:-offset]
             urls.append(clean_url)
