@@ -5,5 +5,5 @@ install:
   @uv tool install . --reinstall
 
 clean:
-  @rm -rf build sora.egg-info
+  @rm -rf build/ sora.egg-info/ .ruff_cache/
 
