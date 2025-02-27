@@ -101,15 +101,13 @@ class Episode:
             )
 
     def get_quality_from_number(self, quality_number=None):
-        if quality_number is None:
-            quality_number = 2
+        quality_number = quality_number or 2
+        quality_order = {1: "SD HD FHD", 2: "HD SD FHD", 3: "FHD HD SD"}.get(
+            quality_number
+        )
+
         quality_info = self.info["quality"]
-        if quality_number == 1:
-            quality_order = "SD HD FHD"
-        elif quality_number == 2:
-            quality_order = "HD SD FHD"
-        elif quality_number == 3:
-            quality_order = "FHD HD SD"
+
         for quality in quality_order.split():
             if quality_info[quality]:
                 return quality_info[quality]
@@ -121,25 +119,17 @@ class Episode:
         to get the direct link of the episode.
         """
         soup = Bs(html, "lxml")
-        info = {"SD": {}, "HD": {}, "FHD": {}}
+        info = {"SD": {}, "FHD": {}, "HD": {}}
         quality_list = soup.find_all(attrs={"class": "quality-list"})
-        if quality_list is not None:
-            for quality_element in quality_list:
-                quality_text = quality_element.find("li").text
-                if "SD" in quality_text:
-                    info["SD"] = self.filter_quality(quality_element)
-                elif "FHD" in quality_text:
-                    info["FHD"] = self.filter_quality(quality_element)
+        if quality_list is None:
+            raise ValueError("Couldn't find the video. Wrong url ?")
 
-                elif "HD" in quality_text:
-                    info["HD"] = self.filter_quality(quality_element)
-
-                else:
-                    raise ValueError(
-                        "An error occured while processing the quality info. Try again later"
-                    )
-            return info
-        raise ValueError("Couldn't find the video. Wrong url ?")
+        for quality_element in quality_list:
+            quality_text = quality_element.find("li").text
+            for quality_option in info.keys():
+                if quality_option in quality_text:
+                    info[quality_option] = self.filter_quality(quality_element)
+        return info
 
     def filter_quality(self, html):
         info = {}
