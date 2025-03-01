@@ -3,9 +3,11 @@ from sora.anime import Anime
 import typer
 
 from typing import Annotated, Optional
+import sys
 
 app = typer.Typer()
 
+APP_VERSION = "0.1.0"
 
 @app.command()
 def download(
@@ -45,6 +47,13 @@ def download(
 def info(url: str) -> None:
     print(url)
 
+def run():
+    args = sys.argv
+    if len(args) == 2:
+        if args[1] == "--version":
+            print(APP_VERSION)
+            sys.exit()
+    app()
 
 if __name__ == "__main__":
-    app()
+    run()
