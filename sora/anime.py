@@ -129,6 +129,7 @@ class Episode:
             for quality_option in info.keys():
                 if quality_option in quality_text:
                     info[quality_option] = self.filter_quality(quality_element)
+                    break
         return info
 
     def filter_quality(self, html):
