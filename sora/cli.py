@@ -61,5 +61,8 @@ def cli(
         print(__version__)
         raise typer.Exit()
 
-if __name__ == "__main__":
+def run():
     app()
+
+if __name__ == "__main__":
+    run()
