@@ -22,7 +22,7 @@ def download(
         bool,
         typer.Option(
             "--all",
-            help="Download all the anime. Note that this is the default option if no episodes specified.",
+            help="Download all the anime. This is the default option if no episodes specified.",
         ),
     ] = None,
     quality: Annotated[
