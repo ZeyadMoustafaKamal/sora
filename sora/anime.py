@@ -28,10 +28,10 @@ class Anime:
         info["title"] = soup.find(attrs={"class": "anime-page-link"}).find("a").text
         return info
 
-    def download(self, episode_line, quality=None):
+    def download(self, episodes, quality=None):
         if quality is None:
             quality = 2
-        episodes_urls = self.get_episodes_urls(episode_line)
+        episodes_urls = self.get_episodes_urls(episodes)
         for url in episodes_urls:
             episode = Episode(url, self.client)
             print("downloading {}".format(episode.info["title"]))
