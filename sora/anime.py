@@ -8,8 +8,9 @@ import json
 
 
 class Anime:
-    def __init__(self, url) -> None:
+    def __init__(self, url, path) -> None:
         self.url = url
+        self.path = path
         self.client = httpx.Client()
         self.info = self.get_anime_info()
 
@@ -33,7 +34,7 @@ class Anime:
             quality = 2
         episodes_urls = self.get_episodes_urls(episodes)
         for url in episodes_urls:
-            episode = Episode(url, self.client)
+            episode = Episode(url,  self.path, client=self.client)
             print("downloading {}".format(episode.info["title"]))
             episode.download(quality)
 
@@ -57,8 +58,9 @@ class Anime:
 
 
 class Episode:
-    def __init__(self, url, client=None) -> None:
+    def __init__(self, url, path, client=None) -> None:
         self.url = url
+        self.path = path
         self.client = client or httpx.Client()
         self.info = self.get_episode_info()
 
@@ -93,7 +95,7 @@ class Episode:
         mediafire = quality.get("mediafire")
         if mediafire:
             url = self.info["url"][int(mediafire)]
-            downloader = MediafireDownloader(url)
+            downloader = MediafireDownloader(url, self.path)
             downloader.download()
         else:
             raise ValueError(

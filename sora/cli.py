@@ -1,3 +1,4 @@
+from os import getcwd
 from sora.anime import Anime
 
 import typer
@@ -7,6 +8,7 @@ from typing import Annotated, Optional
 app = typer.Typer()
 
 __version__ = "0.1.0"
+
 
 @app.command()
 def download(
@@ -31,6 +33,14 @@ def download(
             help="1 for the lowest and 3 for the highest and 2 to download the first available of HD, SD, FHD."
         ),
     ] = 2,
+    path: Annotated[
+        str,
+        typer.Option(
+            "-p",
+            "--path",
+            help="The path to download episode into. The current path will be used if not passed.",
+        ),
+    ] = None,
 ) -> None:
     # url = "https://witanime.quest/episode/ao-no-hako-%d8%a7%d9%84%d8%ad%d9%84%d9%82%d8%a9-6/"
     if download_all:
@@ -38,7 +48,8 @@ def download(
     else:
         if not episodes:
             episodes = "all"
-    anime = Anime(url)
+    path = path or getcwd()
+    anime = Anime(url, path)
     anime.download(episodes, quality)
 
 
@@ -61,8 +72,10 @@ def cli(
         print(__version__)
         raise typer.Exit()
 
+
 def run():
     app()
+
 
 if __name__ == "__main__":
     run()
