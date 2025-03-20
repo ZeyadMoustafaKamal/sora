@@ -4,11 +4,9 @@ from sora.anime import Anime
 import typer
 
 from typing import Annotated, Optional
+from importlib.metadata import distribution
 
 app = typer.Typer()
-
-__version__ = "0.1.0"
-
 
 @app.command()
 def download(
@@ -60,7 +58,7 @@ def info(url: str) -> None:
 
 @app.callback(invoke_without_command=True)
 def cli(
-    version: Optional[bool] = typer.Option(
+    print_version: Optional[bool] = typer.Option(
         None,
         "-v",
         "--version",
@@ -68,8 +66,11 @@ def cli(
         help="Print the current version and exit",
     ),
 ):
-    if version:
-        print(__version__)
+    if print_version:
+        project = distribution("sora")
+        name = project.name
+        version = project.version
+        print(f"{name} {version}")
         raise typer.Exit()
 
 
