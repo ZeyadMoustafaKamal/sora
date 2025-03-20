@@ -1,10 +1,10 @@
+import json
+
 import httpx
 from bs4 import BeautifulSoup as Bs
 
 from sora.downloaders import MediafireDownloader
-from sora.utils import get_from_to, base64_decode
-
-import json
+from sora.utils import base64_decode, get_from_to
 
 
 class Anime:
@@ -34,7 +34,7 @@ class Anime:
             quality = 2
         episodes_urls = self.get_episodes_urls(episodes)
         for url in episodes_urls:
-            episode = Episode(url,  self.path, client=self.client)
+            episode = Episode(url, self.path, client=self.client)
             print("downloading {}".format(episode.info["title"]))
             episode.download(quality)
 

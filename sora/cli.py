@@ -1,12 +1,13 @@
+from importlib.metadata import distribution
 from os import getcwd
-from sora.anime import Anime
+from typing import Annotated, Optional
 
 import typer
 
-from typing import Annotated, Optional
-from importlib.metadata import distribution
+from sora.anime import Anime
 
 app = typer.Typer()
+
 
 @app.command()
 def download(

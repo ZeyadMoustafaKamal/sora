@@ -1,13 +1,13 @@
-from bs4 import BeautifulSoup as Bs
-import httpx
-
-from sora.utils import get_random_name
-
-from gzip import GzipFile
-from io import BytesIO
-import urllib
 import http.client
 import os
+import urllib
+from gzip import GzipFile
+from io import BytesIO
+
+import httpx
+from bs4 import BeautifulSoup as Bs
+
+from sora.utils import get_random_name
 
 
 class BaseDownloader:
