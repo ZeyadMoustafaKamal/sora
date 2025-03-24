@@ -1,6 +1,6 @@
 from importlib.metadata import distribution
-from os import getcwd
 from typing import Annotated, Optional
+import os
 
 import typer
 
@@ -47,7 +47,7 @@ def download(
     else:
         if not episodes:
             episodes = "all"
-    path = path or getcwd()
+    path = path or os.getcwd()
     anime = Anime(url, path)
     anime.download(episodes, quality)
 
