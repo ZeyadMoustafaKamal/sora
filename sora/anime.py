@@ -4,7 +4,7 @@ import httpx
 from bs4 import BeautifulSoup as Bs
 
 from sora.downloaders import MediafireDownloader
-from sora.utils import base64_decode, get_from_to
+from sora.utils import Proxy, base64_decode, get_from_to
 
 
 class Anime:
@@ -18,6 +18,7 @@ class Anime:
         info = {}
         r = self.client.get(self.url)
         soup = Bs(r.text, "lxml")
+        soup = Proxy(soup)
         indirect_urls = []
         for ep in soup.find(id="ULEpisodesList").find_all("a"):
             url_encoded = ep.attrs.get("onclick")[13:-2]
@@ -68,6 +69,7 @@ class Episode:
         info = {}
         r = self.client.get(self.url)
         soup = Bs(r.text, "lxml")
+        soup = Proxy(soup)
         js_data = soup.find(id="d-l-js-extra")
         urls = self.parse_js_urls(js_data.text)
         title = soup.find_all(attrs={"class": "main-section"})[-1].find("h3").text
@@ -121,6 +123,7 @@ class Episode:
         to get the direct link of the episode.
         """
         soup = Bs(html, "lxml")
+        soup = Proxy(soup)
         info = {"SD": {}, "FHD": {}, "HD": {}}
         quality_list = soup.find_all(attrs={"class": "quality-list"})
         if quality_list is None:
