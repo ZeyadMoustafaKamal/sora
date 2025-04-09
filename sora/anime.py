@@ -76,7 +76,7 @@ class Episode:
         quality_info = self.get_quality_info(r.text)
 
         info["title"] = title
-        info["url"] = urls
+        info["urls"] = urls
         info["quality"] = quality_info
         return info
 
@@ -96,7 +96,7 @@ class Episode:
         quality = self.get_quality_from_number(qualiy_number)
         mediafire = quality.get("mediafire")
         if mediafire:
-            url = self.info["url"][int(mediafire)]
+            url = self.info["urls"][int(mediafire)]
             downloader = MediafireDownloader(url, self.path)
             downloader.download()
         else:
