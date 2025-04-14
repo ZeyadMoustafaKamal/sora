@@ -7,6 +7,7 @@ from io import BytesIO
 import httpx
 from bs4 import BeautifulSoup as Bs
 
+from sora.exceptions import EpisodeNotDownloaded
 from sora.utils import get_random_name
 
 
@@ -47,7 +48,10 @@ class MediafireDownloader(BaseDownloader):
         with GzipFile(fileobj=BytesIO(compressed_data)) as f:
             html = f.read().decode("utf-8")
             soup = Bs(html, "lxml")
-            direct_download_url = soup.find("a", {"id": "downloadButton"}).attrs["href"]
+            direct_download_url = soup.find("a", {"id": "downloadButton"})
+            if direct_download_url is None:
+                raise EpisodeNotDownloaded("Didn't find the direct url from mediafire")
+            direct_download_url = direct_download_url.attrs["href"]
             conn = http.client.HTTPConnection(parsed_url.netloc)
             conn.request(
                 "GET",
