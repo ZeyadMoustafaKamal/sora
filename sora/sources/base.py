@@ -1,5 +1,3 @@
-from sora.anime import Episode
-
 import httpx
 
 
@@ -22,7 +20,7 @@ class BaseSource:
         quality = quality or 2
         episodes_urls = self.get_episodes_urls(episodes)
         for url in episodes_urls:
-            episode = Episode(url, self.path, client=self.client)
+            episode = self.episode_class(url, self.path, client=self.client)
             print("Downloading {}".format(episode.info["title"]))
             episode.download(quality)
 

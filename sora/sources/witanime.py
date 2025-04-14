@@ -9,6 +9,10 @@ import json
 
 
 class WitAnimeSource(BaseSource):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.episode_class = Episode
+
     def get_anime_info(self):
         info = {}
         r = self.client.get(self.url)
