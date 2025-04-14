@@ -1,19 +1,14 @@
-import json
+from sora.utils import Proxy, base64_decode, get_from_to
+from sora.downloaders import MediafireDownloader
 
-import httpx
+from .base import BaseEpisode, BaseSource
+
 from bs4 import BeautifulSoup as Bs
 
-from sora.downloaders import MediafireDownloader
-from sora.utils import Proxy, base64_decode, get_from_to
+import json
 
 
-class Anime:
-    def __init__(self, url, path) -> None:
-        self.url = url
-        self.path = path
-        self.client = httpx.Client()
-        self.info = self.get_anime_info()
-
+class WitAnimeSource(BaseSource):
     def get_anime_info(self):
         info = {}
         r = self.client.get(self.url)
@@ -30,17 +25,8 @@ class Anime:
         info["title"] = soup.find(attrs={"class": "anime-page-link"}).find("a").text
         return info
 
-    def download(self, episodes, quality=None):
-        if quality is None:
-            quality = 2
-        episodes_urls = self.get_episodes_urls(episodes)
-        for url in episodes_urls:
-            episode = Episode(url, self.path, client=self.client)
-            print("downloading {}".format(episode.info["title"]))
-            episode.download(quality)
-
     def get_episodes_urls(self, episodes):
-        indirect_urls = self.info["indirect_urls"]
+        indirect_urls = self.indirect_urls
         if episodes == "all":
             print("Downloading all the {} episodes".format(len(indirect_urls)))
             return indirect_urls
@@ -53,18 +39,8 @@ class Anime:
         print("downloading from {} to {}".format(start, end))
         return indirect_urls[start - 1 : end]
 
-    @property
-    def indirect_urls(self):
-        return self.info["indirect_urls"]
 
-
-class Episode:
-    def __init__(self, url, path, client=None) -> None:
-        self.url = url
-        self.path = path
-        self.client = client or httpx.Client()
-        self.info = self.get_episode_info()
-
+class Episode(BaseEpisode):
     def get_episode_info(self):
         info = {}
         r = self.client.get(self.url)

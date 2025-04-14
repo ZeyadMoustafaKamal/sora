@@ -4,7 +4,7 @@ import os
 
 import typer
 
-from sora.anime import Anime
+from sora.sources import *  # noqa: F403
 
 app = typer.Typer()
 
@@ -48,8 +48,10 @@ def download(
         if not episodes:
             episodes = "all"
     path = path or os.getcwd()
-    anime = Anime(url, path)
-    anime.download(episodes, quality)
+    sources = [WitAnimeSource]  # noqa: F405
+    for source in sources:
+        anime_source = source(url, path)
+        anime_source.download(episodes, quality)
 
 
 @app.command()
