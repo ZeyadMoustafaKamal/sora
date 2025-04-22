@@ -1,7 +1,6 @@
 from sora.utils import Proxy, base64_decode, get_from_to
 from sora.downloaders import MediafireDownloader
-
-from .base import BaseEpisode, BaseSource
+from sora.sources.base import BaseEpisode, BaseSource
 
 from bs4 import BeautifulSoup as Bs
 
