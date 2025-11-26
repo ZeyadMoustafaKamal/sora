@@ -16,4 +16,4 @@ dependencies = [
 sora = "sora.cli:run"
 
 [tool.setuptools]
-packages = ["sora"]
+packages = ["sora", "sora.sources"]
